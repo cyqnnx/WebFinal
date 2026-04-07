@@ -10,6 +10,8 @@ import Cart from './pages/Cart.jsx';
 import OrderHistory from './pages/OrderHistory.jsx';
 import OrdersDashboard from './pages/OrdersDashboard.jsx';
 import AdminUsers from './pages/AdminUsers.jsx';
+import NewsAdmin from './pages/NewsAdmin.jsx';
+import NewsBanner from './components/NewsBanner.jsx';
 import Forbidden from './pages/Forbidden.jsx';
 
 export default function App() {
@@ -24,6 +26,7 @@ export default function App() {
       
       <div className="relative z-10 flex flex-1 flex-col">
         <Navbar />
+        <NewsBanner />
         <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 py-8">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -50,6 +53,14 @@ export default function App() {
             element={(
               <ProtectedRoute allowRoles={['admin']}>
                 <AdminUsers />
+              </ProtectedRoute>
+            )}
+          />
+          <Route
+            path="/admin/news"
+            element={(
+              <ProtectedRoute allowRoles={['admin']}>
+                <NewsAdmin />
               </ProtectedRoute>
             )}
           />

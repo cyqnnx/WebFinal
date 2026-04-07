@@ -169,7 +169,7 @@ export default function Cart() {
           type="button"
           onClick={placeOrder}
           disabled={!cart?.items?.length}
-          className="mt-5 w-full rounded-xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white disabled:opacity-60"
+          className="hover:cursor-pointer mt-5 w-full rounded-xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white disabled:opacity-60"
         >
           Place Order
         </button>

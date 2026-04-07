@@ -171,6 +171,16 @@ export default function Navbar() {
                 Products
               </NavLink>
             ) : null}
+            {role === 'admin' ? (
+              <NavLink
+                to="/admin/news"
+                className={({ isActive }) =>
+                  isActive ? 'font-semibold text-gray-900' : 'text-gray-600 hover:text-gray-900'
+                }
+              >
+                News
+              </NavLink>
+            ) : null}
             {(role === 'employee' || role === 'admin') ? (
               <NavLink
                 to="/orders"
