@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  // Vite proxy will route /api/* to the backend in dev.
-  baseURL: '',
+  // Use VITE_API_URL from environment variables in production, fallback to empty string for dev proxy
+  baseURL: import.meta.env.VITE_API_URL || '',
 });
 
 api.interceptors.request.use((config) => {

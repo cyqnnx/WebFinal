@@ -1,5 +1,7 @@
 import './config/env.js';
 import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
@@ -14,6 +16,9 @@ import userRoutes from './routes/userRoutes.js';
 import { errorMiddleware } from './middleware/errorMiddleware.js';
 
 const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const port = Number(process.env.PORT || 4000);
 const clientOrigin = process.env.CLIENT_ORIGIN || '*';
@@ -39,7 +44,17 @@ app.use('/api/orders/manage', orderManageRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/news', newsRoutes);
 
-app.use((req, res) => res.status(404).json({ error: { message: 'Not found' } }));
+// --- Serve Frontend Static Files ---
+// (This is for Production on Render)
+const frontendBuildPath = path.resolve(__dirname, '../../frontend/dist');
+app.use(express.static(frontendBuildPath));
+
+// Handle all other routes by serving the index.html (client-side routing)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(frontendBuildPath, 'index.html'));
+});
+
+// app.use((req, res) => res.status(404).json({ error: { message: 'Not found' } }));
 app.use(errorMiddleware);
 
 await connectDB();
